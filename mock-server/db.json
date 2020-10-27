@@ -1,0 +1,58 @@
+{
+  "country": [
+    {
+      "id": 1,
+      "name": "India"
+    },
+    {
+      "id": 2,
+      "name": "Philippines"
+    },
+    {
+      "name": "America",
+      "id": 3
+    },
+    {
+      "name": "Africa",
+      "id": 4
+    }
+  ],
+  "city": [
+    {
+      "id": 1,
+      "country_id": 1,
+      "city_name": "Delhi",
+      "population": 1320000
+    },
+    {
+      "id": 2,
+      "country_id": 1,
+      "city_name": "Kolkata",
+      "population": 1320000
+    },
+    {
+      "id": 3,
+      "country_id": 2,
+      "city_name": "Manilla",
+      "population": 540000
+    },
+    {
+      "country_id": "2",
+      "city_name": "Bangalore",
+      "population": "8788787",
+      "id": 4
+    },
+    {
+      "country_id": "2",
+      "city_name": "Bangalore",
+      "population": "9999",
+      "id": 5
+    },
+    {
+      "country_id": "2",
+      "city_name": "jdkkjfd",
+      "population": "9999",
+      "id": 6
+    }
+  ]
+}
