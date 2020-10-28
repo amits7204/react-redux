@@ -97,8 +97,8 @@ const getCountryObj = (payload) => (dispatch) => {
     .post("http://localhost:3000/country", {
       name: payload.cname,
     })
-    .then((res) => console.log(res.data))
-    .then((res) => dispatch(countryPostSuccess(res)))
+    // .then((res) => console.log(res.data))
+    .then((res) => dispatch(countryPostSuccess(res.data)))
     .catch((err) => dispatch(countryPostFauiluier(err)));
 };
 const postCityObj = (payload) => (dispatch) => {
@@ -128,8 +128,8 @@ const getCountryList = () => (dispatch) => {
   dispatch(countryGetFauiluier());
   axios
     .get("http://localhost:3000/country")
-    .then((res) => res.data)
-    .then((res) => dispatch(countryGetSuccess(res)))
+    // .then((res) => console.log("Country Response: ", res.data));
+    .then((res) => dispatch(countryGetSuccess(res.data)))
     .catch((err) => dispatch(countryGetFauiluier(err)));
 };
 export { getLoginAuth, getCountryObj, postCityObj, getCityObj, getCountryList };

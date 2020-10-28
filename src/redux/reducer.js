@@ -20,13 +20,12 @@ export const initState = {
   token: "",
   isAuth: true,
   isError: true,
-  payload: [],
   city: [],
-  country: {},
+  countryList: [],
 };
 
 export default (state = initState, { type, payload }) => {
-  console.log("ERROR REDUCER: ", payload);
+  console.log("REDUCER: ", payload);
   switch (type) {
     case LOGIN_POST_REQUEST:
       return {
@@ -49,12 +48,11 @@ export default (state = initState, { type, payload }) => {
     case COUNTRY_POST_REQUEST:
       return {
         ...state,
-        cname: payload.name,
       };
     case COUNTRY_POST_SUCCESSS:
       return {
         ...state,
-        country: payload,
+        countryList: [...state.countryList, payload],
       };
     case COUNTRY_POST_FAUILUIER:
       return {
@@ -70,7 +68,7 @@ export default (state = initState, { type, payload }) => {
     case COUNTRY_GET_SUCCESSS:
       return {
         ...state,
-        country: [...payload, state.country],
+        countryList: payload,
       };
     case COUNTRY_GET_FAUILUIER:
       return {

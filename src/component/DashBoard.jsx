@@ -36,7 +36,7 @@ class DashBoard extends React.Component {
 
   componentDidMount() {
     const { countryList } = this.props;
-    countryList({});
+    countryList();
   }
 
   handleCityname = (e) => {
@@ -78,23 +78,16 @@ class DashBoard extends React.Component {
   };
   render() {
     const { country } = this.props;
-    // getValue;
-    console.log("COUNTRY LIST: ", country && country);
-    const { cname } = this.state;
-
-    const { list, isAccess, cityName, population, cityList } = this.state;
-    console.log("City LIST: ", cityList.length);
-    if (country.length > 0) {
-      console.log("COUNTRY LIST: ", country);
-    } else {
-      return <span>Loading...</span>;
-    }
-
-    // if (cityList.length > 0) {
-    //   console.log("city LIST: ", cityList && cityList);
-    // } else {
-    //   return <span>Loading...</span>;
-    // }
+    console.log("COUNTRY LIST: ", country);
+    const {
+      list,
+      isAccess,
+      cityName,
+      population,
+      cityList,
+      cname,
+    } = this.state;
+    console.log("COUNTRY LIST: ", country);
 
     return (
       <>
@@ -107,13 +100,14 @@ class DashBoard extends React.Component {
         />
         <button onClick={this.handleOnSubmit}>ADD</button>
         <select onChange={this.selectChange} value={this.state.selectValue}>
-          {country.map((item) => {
-            return (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            );
-          })}
+          {country &&
+            country.map((item) => {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              );
+            })}
         </select>
         {this.state.selectID !== 0 ? (
           <div>
@@ -157,7 +151,7 @@ class DashBoard extends React.Component {
 
 const mapToStateProps = (state) => ({
   // name: state.app.name,
-  country: state.app.country,
+  country: state.app.countryList,
   city: state.app.city,
   // isAuth: state.app.isAuth,
 });
