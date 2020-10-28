@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getLoginAuth } from "../redux/actionCreator";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // import { DashBoard } from "./DashBoard";
 //ab7204
 //secret
@@ -24,14 +25,18 @@ class Login extends React.Component {
 
   handleOnSubmit = (e) => {
     e.preventDefault();
-    const { getAuth } = this.props;
+    const { getAuth, isError } = this.props;
     const { username, password } = this.state;
     getAuth({ username, password });
   };
   render() {
     const { username, password } = this.state;
-    const { token, isAuth } = this.props;
-    console.log("TOKEN: ", token, " ", isAuth);
+    const { token, isError } = this.props;
+    console.log("TOKEN: ", token, " ", isError);
+    if (!isError) {
+      console.log("ERRRROOORRR: ", isError);
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <>
         <form onSubmit={this.handleOnSubmit}>
@@ -53,11 +58,12 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <Link to="/dashboard">
-            <input type="submit" value="Login" />
-          </Link>
+          {/* <Link to="/dashboard"> */}
+          <input type="submit" value="Login" />
+          {/* </Link> */}
+          {/* {isAuth && !isAuth ? <Link to="/dashboard" /> : <Link to="/login" />} */}
         </form>
-        {token && token.length !== 0 ? alert("login success") : ""}
+
         {/* <DashBoard /> */}
       </>
     );
@@ -66,7 +72,7 @@ class Login extends React.Component {
 
 const mapToStateProps = (state) => ({
   token: state.app.token,
-  isAuth: state.app.isAuth,
+  isError: state.app.isError,
 });
 
 const mapToDispatchProps = (dispatch) => ({
