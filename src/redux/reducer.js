@@ -6,6 +6,9 @@ import {
   COUNTRY_POST_REQUEST,
   COUNTRY_POST_SUCCESSS,
   COUNTRY_POST_FAUILUIER,
+  COUNTRY_GET_REQUEST,
+  COUNTRY_GET_SUCCESSS,
+  COUNTRY_GET_FAUILUIER,
   CITY_POST_REQUEST,
   CITY_POST_SUCCESSS,
   CITY_POST_FAUILUIER,
@@ -19,6 +22,7 @@ export const initState = {
   isError: true,
   payload: [],
   city: [],
+  country: {},
 };
 
 export default (state = initState, { type, payload }) => {
@@ -50,12 +54,28 @@ export default (state = initState, { type, payload }) => {
     case COUNTRY_POST_SUCCESSS:
       return {
         ...state,
-        payload: payload,
+        country: payload,
       };
     case COUNTRY_POST_FAUILUIER:
       return {
         ...state,
         isAuth: true,
+      };
+    case COUNTRY_GET_REQUEST:
+      return {
+        ...state,
+        country: payload,
+        // name: payload.cname,
+      };
+    case COUNTRY_GET_SUCCESSS:
+      return {
+        ...state,
+        country: [...payload, state.country],
+      };
+    case COUNTRY_GET_FAUILUIER:
+      return {
+        ...state,
+        // isAuth: true,
       };
     case CITY_POST_REQUEST:
       return {

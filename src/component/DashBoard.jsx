@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCountryObj, postCityObj, getCityObj } from "../redux/actionCreator";
+import {
+  getCountryObj,
+  postCityObj,
+  getCityObj,
+  getCountryList,
+} from "../redux/actionCreator";
 // import { getCountryList } from "../redux/countryredux/countryCreator";
 import axios from "axios";
 class DashBoard extends React.Component {
@@ -30,12 +35,8 @@ class DashBoard extends React.Component {
   // };
 
   componentDidMount() {
-    axios.get("http://localhost:3000/country").then((res) =>
-      this.setState({
-        list: res.data,
-        isAccess: true,
-      })
-    );
+    const { countryList } = this.props;
+    countryList({});
   }
 
   handleCityname = (e) => {
@@ -78,12 +79,13 @@ class DashBoard extends React.Component {
   render() {
     const { country } = this.props;
     // getValue;
+    console.log("COUNTRY LIST: ", country && country);
     const { cname } = this.state;
 
     const { list, isAccess, cityName, population, cityList } = this.state;
     console.log("City LIST: ", cityList.length);
-    if (list.length > 0) {
-      console.log("COUNTRY LIST: ", list && list);
+    if (country.length > 0) {
+      console.log("COUNTRY LIST: ", country);
     } else {
       return <span>Loading...</span>;
     }
@@ -105,8 +107,12 @@ class DashBoard extends React.Component {
         />
         <button onClick={this.handleOnSubmit}>ADD</button>
         <select onChange={this.selectChange} value={this.state.selectValue}>
-          {list.map((item) => {
-            return <option value={item.id}>{item.name}</option>;
+          {country.map((item) => {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            );
           })}
         </select>
         {this.state.selectID !== 0 ? (
@@ -149,17 +155,18 @@ class DashBoard extends React.Component {
   }
 }
 
-// const mapToStateProps = (state) => ({
-//   // name: state.app.name,
-//   // country: state.app2.country,
-//   city: state.app.city,
-//   // isAuth: state.app.isAuth,
-// });
+const mapToStateProps = (state) => ({
+  // name: state.app.name,
+  country: state.app.country,
+  city: state.app.city,
+  // isAuth: state.app.isAuth,
+});
 
 const mapToDispatchProps = (dispatch) => ({
   getCountry: (payload) => dispatch(getCountryObj(payload)),
   // countryList: () => dispatch(getCountryList()),
   cityObj: (payload) => dispatch(postCityObj(payload)),
   cityList: () => dispatch(getCityObj()),
+  countryList: () => dispatch(getCountryList()),
 });
-export default connect(null, mapToDispatchProps)(DashBoard);
+export default connect(mapToStateProps, mapToDispatchProps)(DashBoard);

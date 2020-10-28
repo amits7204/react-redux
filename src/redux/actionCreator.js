@@ -5,6 +5,9 @@ import {
   COUNTRY_POST_REQUEST,
   COUNTRY_POST_SUCCESSS,
   COUNTRY_POST_FAUILUIER,
+  COUNTRY_GET_REQUEST,
+  COUNTRY_GET_SUCCESSS,
+  COUNTRY_GET_FAUILUIER,
   CITY_POST_REQUEST,
   CITY_POST_SUCCESSS,
   CITY_POST_FAUILUIER,
@@ -62,6 +65,17 @@ const cityGetSuccess = (payload) => {
 const cityGetFauiluier = (payload) => {
   return { type: CITY_GET_FAUILUIER, payload };
 };
+const countryGetRequest = (payload) => {
+  return { type: COUNTRY_GET_REQUEST, payload };
+};
+
+const countryGetSuccess = (payload) => {
+  return { type: COUNTRY_GET_SUCCESSS, payload };
+};
+
+const countryGetFauiluier = (payload) => {
+  return { type: COUNTRY_GET_FAUILUIER, payload };
+};
 
 const getLoginAuth = (payload) => (dispatch) => {
   console.log(payload);
@@ -110,14 +124,12 @@ const getCityObj = () => (dispatch) => {
     .then((res) => dispatch(cityGetSuccess(res)))
     .catch((err) => dispatch(cityGetFauiluier(err)));
 };
-export {
-  loginPostRequest,
-  loginPostSuccess,
-  loginPostFauiluier,
-  getLoginAuth,
-  countryPostRequest,
-  countryPostFauiluier,
-  getCountryObj,
-  postCityObj,
-  getCityObj,
+const getCountryList = () => (dispatch) => {
+  dispatch(countryGetFauiluier());
+  axios
+    .get("http://localhost:3000/country")
+    .then((res) => res.data)
+    .then((res) => dispatch(countryGetSuccess(res)))
+    .catch((err) => dispatch(countryGetFauiluier(err)));
 };
+export { getLoginAuth, getCountryObj, postCityObj, getCityObj, getCountryList };

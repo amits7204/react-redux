@@ -11,7 +11,7 @@ class Router extends React.Component {
       <>
         <switch>
           <Route path="/" exact component={Login} />
-          <Route path="/dashboard" component={DashBoard} />
+          <Route path="/dashboard" exact component={DashBoard} />
         </switch>
       </>
     );
