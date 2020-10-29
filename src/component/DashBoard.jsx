@@ -7,6 +7,16 @@ import {
   getCountryList,
   deleteCity,
 } from "../redux/actionCreator";
+import {
+  CONTAINER,
+  FORMDIV,
+  CUSTOMINPUT,
+  ADDBUTTON,
+  SELECT,
+  CODECONTAINER,
+  PARA,
+  PARA1,
+} from "./CustomStyledComponent";
 // import { getCountryList } from "../redux/countryredux/countryCreator";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
@@ -81,56 +91,79 @@ class DashBoard extends React.Component {
     console.log("COUNTRY LIST: ", country);
 
     return (
-      <>
-        <input
-          type="text"
-          placeholder="enter new country"
-          name="cname"
-          value={cname}
-          onChange={this.handleOnChange}
-        />
-        <button onClick={this.handleOnSubmit}>ADD</button>
-        <select onChange={this.selectChange} value={this.state.selectValue}>
-          {country &&
-            country.map((item) => {
-              return <option value={item.id}>{item.name}</option>;
-            })}
-        </select>
-        {this.state.selectID !== 0 ? (
-          <div>
-            <p>{this.state.selectID}</p>
-
-            <form onSubmit={this.handleAddbutton}>
-              <input
-                name="cityName"
-                placeholder="enter city name"
-                type="text"
-                value={cityName}
-                onChange={this.handleCityname}
-              />
-              <input
-                name="population"
-                placeholder="enter population"
-                type="text"
-                value={population}
-                onChange={this.handleCityname}
-              />
-              <input value="ADD" type="submit" />
-            </form>
-            {city &&
-              city.map((item) => {
+      <CONTAINER>
+        <FORMDIV>
+          <CUSTOMINPUT
+            type="text"
+            placeholder="enter new country"
+            name="cname"
+            value={cname}
+            onChange={this.handleOnChange}
+          />
+          <br />
+          <br />
+          <ADDBUTTON onClick={this.handleOnSubmit}>ADD</ADDBUTTON>
+          <br />
+          <br />
+          <SELECT onChange={this.selectChange} value={this.state.selectValue}>
+            {country &&
+              country.map((item) => {
                 return (
-                  <div>
-                    <p>{item.city_name}</p>
-                    <button onClick={() => deleteCityId(item.id)}>
-                      DELETE
-                    </button>
-                  </div>
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
                 );
               })}
-          </div>
-        ) : null}
-      </>
+          </SELECT>
+
+          {this.state.selectID !== 0 ? (
+            <div>
+              <CODECONTAINER>
+                <PARA>Country Code: </PARA>
+                <PARA1>{this.state.selectID}</PARA1>
+              </CODECONTAINER>
+              <form onSubmit={this.handleAddbutton}>
+                <CUSTOMINPUT
+                  name="cityName"
+                  placeholder="enter city name"
+                  type="text"
+                  value={cityName}
+                  onChange={this.handleCityname}
+                />
+                <br />
+                <br />
+                <CUSTOMINPUT
+                  name="population"
+                  placeholder="enter population"
+                  type="text"
+                  value={population}
+                  onChange={this.handleCityname}
+                />
+                <br />
+                <br />
+                <ADDBUTTON>ADD</ADDBUTTON>
+              </form>
+            </div>
+          ) : null}
+        </FORMDIV>
+        <div>
+          {this.state.selectID !== 0 ? (
+            <div>
+              {city &&
+                city.map((item) => {
+                  return (
+                    <div>
+                      <p>{item.city_name}</p>
+                      <button onClick={() => deleteCityId(item.id)}>
+                        DELETE
+                      </button>
+                    </div>
+                  );
+                })}
+            </div>
+          ) : null}
+        </div>
+      </CONTAINER>
     );
   }
 }
