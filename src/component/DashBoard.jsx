@@ -5,9 +5,11 @@ import {
   postCityObj,
   getCityObj,
   getCountryList,
+  deleteCity,
 } from "../redux/actionCreator";
 // import { getCountryList } from "../redux/countryredux/countryCreator";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 class DashBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,7 @@ class DashBoard extends React.Component {
       cityName: "",
       population: "",
       cityList: [],
+      city_id: 0,
     };
   }
 
@@ -35,8 +38,9 @@ class DashBoard extends React.Component {
   // };
 
   componentDidMount() {
-    const { countryList } = this.props;
+    const { countryList, cityList } = this.props;
     countryList();
+    cityList();
   }
 
   handleCityname = (e) => {
@@ -49,20 +53,13 @@ class DashBoard extends React.Component {
   handleAddbutton = (e) => {
     e.preventDefault();
     console.log("ADD BUTTON:");
-    const { cityObj, city, cityList } = this.props;
+    const { cityObj } = this.props;
     const { selectID, cityName, population } = this.state;
     cityObj({ selectID, cityName, population });
-    cityList({});
-    console.log("CITTTYY: ", this.props);
-    axios.get("http://localhost:3000/city").then((res) =>
-      this.setState({
-        cityList: res.data,
-      })
-    );
   };
 
   handleOnSubmit = () => {
-    const { getCountry, countryList } = this.props;
+    const { getCountry } = this.props;
     const { cname } = this.state;
     getCountry({ cname });
 
@@ -76,17 +73,11 @@ class DashBoard extends React.Component {
       selectValue: e.target.name,
     });
   };
+
   render() {
-    const { country } = this.props;
-    console.log("COUNTRY LIST: ", country);
-    const {
-      list,
-      isAccess,
-      cityName,
-      population,
-      cityList,
-      cname,
-    } = this.state;
+    const { country, city, isError, deleteCityId } = this.props;
+    console.log("City LIST: ", city);
+    const { list, isAccess, cityName, population, cname } = this.state;
     console.log("COUNTRY LIST: ", country);
 
     return (
@@ -102,11 +93,7 @@ class DashBoard extends React.Component {
         <select onChange={this.selectChange} value={this.state.selectValue}>
           {country &&
             country.map((item) => {
-              return (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              );
+              return <option value={item.id}>{item.name}</option>;
             })}
         </select>
         {this.state.selectID !== 0 ? (
@@ -130,18 +117,17 @@ class DashBoard extends React.Component {
               />
               <input value="ADD" type="submit" />
             </form>
-            {cityList.length > 0 ? (
-              cityList.map((item) => {
+            {city &&
+              city.map((item) => {
                 return (
                   <div>
                     <p>{item.city_name}</p>
-                    <button>DELETE</button>
+                    <button onClick={() => deleteCityId(item.id)}>
+                      DELETE
+                    </button>
                   </div>
                 );
-              })
-            ) : (
-              <p>city name</p>
-            )}
+              })}
           </div>
         ) : null}
       </>
@@ -153,7 +139,7 @@ const mapToStateProps = (state) => ({
   // name: state.app.name,
   country: state.app.countryList,
   city: state.app.city,
-  // isAuth: state.app.isAuth,
+  isError: state.app.isError,
 });
 
 const mapToDispatchProps = (dispatch) => ({
@@ -162,5 +148,6 @@ const mapToDispatchProps = (dispatch) => ({
   cityObj: (payload) => dispatch(postCityObj(payload)),
   cityList: () => dispatch(getCityObj()),
   countryList: () => dispatch(getCountryList()),
+  deleteCityId: (payload) => dispatch(deleteCity(payload)),
 });
 export default connect(mapToStateProps, mapToDispatchProps)(DashBoard);

@@ -14,6 +14,9 @@ import {
   CITY_GET_REQUEST,
   CITY_GET_SUCCESSS,
   CITY_GET_FAUILUIER,
+  DELETE_CITY_REQUEST,
+  DELETE_CITY_SUCCESS,
+  DELETE_CITY_FAUILUIER,
 } from "./actionType";
 
 import axios from "axios";
@@ -77,6 +80,18 @@ const countryGetFauiluier = (payload) => {
   return { type: COUNTRY_GET_FAUILUIER, payload };
 };
 
+const deleteCityRequest = (payload) => {
+  return { type: DELETE_CITY_REQUEST, payload };
+};
+
+const deleteCitySuccess = (payload) => {
+  return { type: DELETE_CITY_SUCCESS, payload };
+};
+
+const deleteCityFauiluier = (payload) => {
+  return { type: DELETE_CITY_FAUILUIER, payload };
+};
+
 const getLoginAuth = (payload) => (dispatch) => {
   console.log(payload);
   dispatch(loginPostRequest());
@@ -110,8 +125,8 @@ const postCityObj = (payload) => (dispatch) => {
       city_name: payload.cityName,
       population: payload.population,
     })
-    .then((res) => console.log(res.data))
-    .then((res) => dispatch(cityPostSuccess(res)))
+    // .then((res) => console.log(res.data))
+    .then((res) => dispatch(cityPostSuccess(res.data)))
     .catch((err) => dispatch(cityPostFauiluier(err)));
 };
 
@@ -120,8 +135,8 @@ const getCityObj = () => (dispatch) => {
   dispatch(cityGetRequest());
   axios
     .get("http://localhost:3000/city")
-    .then((res) => console.log("CITY RESPONSE: ", res.data))
-    .then((res) => dispatch(cityGetSuccess(res)))
+    // .then((res) => console.log("CITY RESPONSE: ", res.data))
+    .then((res) => dispatch(cityGetSuccess(res.data)))
     .catch((err) => dispatch(cityGetFauiluier(err)));
 };
 const getCountryList = () => (dispatch) => {
@@ -132,4 +147,22 @@ const getCountryList = () => (dispatch) => {
     .then((res) => dispatch(countryGetSuccess(res.data)))
     .catch((err) => dispatch(countryGetFauiluier(err)));
 };
-export { getLoginAuth, getCountryObj, postCityObj, getCityObj, getCountryList };
+
+const deleteCity = (id) => (dispatch) => {
+  console.log("DELETE Payload: ", id);
+  dispatch(deleteCityRequest);
+  axios
+    .delete(`http://localhost:3000/city/${id}`)
+    // .then((res) => console.log("DELETE REQUEST: ", res))
+    .then((res) => dispatch(deleteCitySuccess(id)))
+    .catch((err) => dispatch(deleteCityFauiluier(err)));
+};
+
+export {
+  getLoginAuth,
+  getCountryObj,
+  postCityObj,
+  getCityObj,
+  getCountryList,
+  deleteCity,
+};

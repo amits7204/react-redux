@@ -15,6 +15,9 @@ import {
   CITY_GET_REQUEST,
   CITY_GET_SUCCESSS,
   CITY_GET_FAUILUIER,
+  DELETE_CITY_REQUEST,
+  DELETE_CITY_SUCCESS,
+  DELETE_CITY_FAUILUIER,
 } from "./actionType";
 export const initState = {
   token: "",
@@ -22,6 +25,7 @@ export const initState = {
   isError: true,
   city: [],
   countryList: [],
+  city_id: 0,
 };
 
 export default (state = initState, { type, payload }) => {
@@ -62,7 +66,6 @@ export default (state = initState, { type, payload }) => {
     case COUNTRY_GET_REQUEST:
       return {
         ...state,
-        country: payload,
         // name: payload.cname,
       };
     case COUNTRY_GET_SUCCESSS:
@@ -78,12 +81,12 @@ export default (state = initState, { type, payload }) => {
     case CITY_POST_REQUEST:
       return {
         ...state,
-        cname: payload,
+        // cname: payload,
       };
     case CITY_POST_SUCCESSS:
       return {
         ...state,
-        payload: payload,
+        city: [...state.city, payload],
       };
     case CITY_POST_FAUILUIER:
       return {
@@ -93,7 +96,7 @@ export default (state = initState, { type, payload }) => {
     case CITY_GET_REQUEST:
       return {
         ...state,
-        city: payload,
+        // city: payload,
       };
     case CITY_GET_SUCCESSS:
       return {
@@ -101,6 +104,24 @@ export default (state = initState, { type, payload }) => {
         city: payload,
       };
     case CITY_GET_FAUILUIER:
+      return {
+        ...state,
+        isAuth: true,
+      };
+    case DELETE_CITY_REQUEST:
+      return {
+        ...state,
+        // city: payload,
+        // isAuth: true,
+      };
+    case DELETE_CITY_SUCCESS:
+      const cityId = payload;
+      const remainingCityList = state.city.filter((item) => item.id !== cityId);
+      return {
+        ...state,
+        city: remainingCityList,
+      };
+    case DELETE_CITY_FAUILUIER:
       return {
         ...state,
         isAuth: true,
