@@ -19,74 +19,20 @@
     {
       "name": "Srilanka",
       "id": 5
-    },
-    {
-      "name": "Srilanka",
-      "id": 6
-    },
-    {
-      "name": "England",
-      "id": 7
-    },
-    {
-      "name": "germany",
-      "id": 8
-    },
-    {
-      "name": "jdfdjfk",
-      "id": 9
-    },
-    {
-      "name": "kolkat",
-      "id": 10
-    },
-    {
-      "name": "zjxckvj",
-      "id": 11
-    },
-    {
-      "name": "slkfdslkd",
-      "id": 12
-    },
-    {
-      "name": "sskjds",
-      "id": 13
-    },
-    {
-      "name": "Africa",
-      "id": 14
     }
   ],
   "city": [
     {
-      "country_id": "5",
-      "city_name": "kk",
-      "population": "8676",
-      "id": 10
-    },
-    {
-      "country_id": "10",
-      "city_name": "djkf",
-      "population": "878",
-      "id": 11
-    },
-    {
-      "country_id": "7",
+      "country_id": "1",
       "city_name": "Bangalore",
-      "population": "222222",
-      "id": 12
+      "population": "83838383",
+      "id": 1
     },
     {
-      "country_id": "7",
-      "city_name": "kjdfkfd",
-      "population": "222222",
-      "id": 13
-    },
-    {
-      "country_id": "6",
-      "city_name": "sdf",
-      "population": "9787777777",
-      "id": 14
+      "country_id": "1",
+      "city_name": "Kolkata",
+      "population": "93838291",
+      "id": 2
     }
   ]
 }

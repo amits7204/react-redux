@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getLoginAuth } from "../redux/actionCreator";
 import { Link, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { LOGINCONTAINER, CUSTOMINPUT } from "./CustomStyledComponent";
 // import { DashBoard } from "./DashBoard";
 //ab7204
 //secret
@@ -38,9 +39,19 @@ class Login extends React.Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <>
+      <LOGINCONTAINER>
+        <img
+          src="https://cdn.svgporn.com/logos/redux.svg"
+          alt="icon"
+          style={{
+            margin: "auto",
+            height: "30px",
+            width: "30px",
+            paddingBottom: "10px",
+          }}
+        />
         <form onSubmit={this.handleOnSubmit}>
-          <input
+          <CUSTOMINPUT
             type="text"
             placeholder="Please enter a username"
             name="username"
@@ -49,9 +60,9 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <input
+          <CUSTOMINPUT
             type="password"
-            placeholder="Please enter a password"
+            placeholder="*******"
             name="password"
             value={password}
             onChange={this.handleOnChange}
@@ -59,13 +70,13 @@ class Login extends React.Component {
           <br />
           <br />
           {/* <Link to="/dashboard"> */}
-          <input type="submit" value="Login" />
+          <CUSTOMINPUT type="submit" value="Login" />
           {/* </Link> */}
           {/* {isAuth && !isAuth ? <Link to="/dashboard" /> : <Link to="/login" />} */}
         </form>
 
         {/* <DashBoard /> */}
-      </>
+      </LOGINCONTAINER>
     );
   }
 }

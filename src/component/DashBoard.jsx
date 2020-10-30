@@ -16,6 +16,9 @@ import {
   CODECONTAINER,
   PARA,
   PARA1,
+  CITYPARA,
+  DELETEBUTTON,
+  EDITBUTTON,
 } from "./CustomStyledComponent";
 // import { getCountryList } from "../redux/countryredux/countryCreator";
 import axios from "axios";
@@ -33,6 +36,7 @@ class DashBoard extends React.Component {
       population: "",
       cityList: [],
       city_id: 0,
+      tebularList: ["City", "Population"],
     };
   }
 
@@ -106,6 +110,7 @@ class DashBoard extends React.Component {
           <br />
           <br />
           <SELECT onChange={this.selectChange} value={this.state.selectValue}>
+            <option value="Select">Select Country</option>
             {country &&
               country.map((item) => {
                 return (
@@ -146,23 +151,26 @@ class DashBoard extends React.Component {
             </div>
           ) : null}
         </FORMDIV>
-        <div>
-          {this.state.selectID !== 0 ? (
-            <div>
-              {city &&
-                city.map((item) => {
-                  return (
-                    <div>
-                      <p>{item.city_name}</p>
-                      <button onClick={() => deleteCityId(item.id)}>
-                        DELETE
-                      </button>
-                    </div>
-                  );
-                })}
-            </div>
-          ) : null}
-        </div>
+        {/* <FORMDIV> */}
+        {this.state.selectID !== 0 ? (
+          <FORMDIV>
+            {city &&
+              city.map((item) => {
+                console.log("CITY ITEM: ", item);
+                return (
+                  <CONTAINER>
+                    <CITYPARA>{item.city_name}</CITYPARA>
+                    <CITYPARA>{item.population}</CITYPARA>
+                    <DELETEBUTTON onClick={() => deleteCityId(item.id)}>
+                      DELETE
+                    </DELETEBUTTON>
+                    <EDITBUTTON>EDIT</EDITBUTTON>
+                  </CONTAINER>
+                );
+              })}
+          </FORMDIV>
+        ) : null}
+        {/* </FORMDIV> */}
       </CONTAINER>
     );
   }
