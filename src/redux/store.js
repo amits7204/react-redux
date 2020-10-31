@@ -1,11 +1,14 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import reducer from "./reducer";
-import countryReducer from "./countryredux/countryReducer";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   app: reducer,
-  app2: countryReducer,
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);

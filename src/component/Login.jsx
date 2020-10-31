@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getLoginAuth } from "../redux/actionCreator";
-import { Link, Redirect } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { LOGINCONTAINER, CUSTOMINPUT } from "./CustomStyledComponent";
+import { Redirect } from "react-router-dom";
+import { LoginContainer, CustomInput } from "./CustomStyledComponent";
 // import { DashBoard } from "./DashBoard";
 //ab7204
 //secret
@@ -26,7 +25,7 @@ class Login extends React.Component {
 
   handleOnSubmit = (e) => {
     e.preventDefault();
-    const { getAuth, isError } = this.props;
+    const { getAuth } = this.props;
     const { username, password } = this.state;
     getAuth({ username, password });
   };
@@ -39,7 +38,7 @@ class Login extends React.Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <LOGINCONTAINER>
+      <LoginContainer>
         <img
           src="https://cdn.svgporn.com/logos/redux.svg"
           alt="icon"
@@ -51,7 +50,7 @@ class Login extends React.Component {
           }}
         />
         <form onSubmit={this.handleOnSubmit}>
-          <CUSTOMINPUT
+          <CustomInput
             type="text"
             placeholder="Please enter a username"
             name="username"
@@ -60,7 +59,7 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <CUSTOMINPUT
+          <CustomInput
             type="password"
             placeholder="*******"
             name="password"
@@ -70,13 +69,13 @@ class Login extends React.Component {
           <br />
           <br />
           {/* <Link to="/dashboard"> */}
-          <CUSTOMINPUT type="submit" value="Login" />
+          <CustomInput type="submit" value="Login" />
           {/* </Link> */}
           {/* {isAuth && !isAuth ? <Link to="/dashboard" /> : <Link to="/login" />} */}
         </form>
 
         {/* <DashBoard /> */}
-      </LOGINCONTAINER>
+      </LoginContainer>
     );
   }
 }

@@ -17,6 +17,9 @@ import {
   DELETE_CITY_REQUEST,
   DELETE_CITY_SUCCESS,
   DELETE_CITY_FAUILUIER,
+  UPDATE_REQUEST,
+  UPDATE_SUCCESS,
+  UPDATE_FAUILUIER,
 } from "./actionType";
 
 import axios from "axios";
@@ -92,6 +95,18 @@ const deleteCityFauiluier = (payload) => {
   return { type: DELETE_CITY_FAUILUIER, payload };
 };
 
+const updateRequest = (payload) => {
+  return { type: UPDATE_REQUEST, payload };
+};
+
+const updateSuccess = (payload) => {
+  return { type: UPDATE_SUCCESS, payload };
+};
+
+const updateFauiluier = (payload) => {
+  return { type: UPDATE_FAUILUIER, payload };
+};
+
 const getLoginAuth = (payload) => (dispatch) => {
   console.log(payload);
   dispatch(loginPostRequest());
@@ -121,7 +136,7 @@ const postCityObj = (payload) => (dispatch) => {
   dispatch(cityPostRequest(payload));
   axios
     .post("http://localhost:3000/city", {
-      country_id: payload.selectID,
+      country_name: payload.selectValue,
       city_name: payload.cityName,
       population: payload.population,
     })
@@ -158,6 +173,20 @@ const deleteCity = (id) => (dispatch) => {
     .catch((err) => dispatch(deleteCityFauiluier(err)));
 };
 
+const updatePopulation = (payload) => (dispatch) => {
+  console.log("Population: ", payload);
+  const { id, population } = payload;
+  dispatch(updateRequest());
+  axios
+    .patch(`http://localhost:3000/city/${id}`, {
+      id: id,
+      population: population,
+    })
+    .then((res) => res.data)
+    .then((res) => dispatch(updateSuccess(res.data)))
+    .catch((err) => dispatch(updateFauiluier(err)));
+};
+
 export {
   getLoginAuth,
   getCountryObj,
@@ -165,4 +194,5 @@ export {
   getCityObj,
   getCountryList,
   deleteCity,
+  updatePopulation,
 };

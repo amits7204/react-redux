@@ -8,30 +8,26 @@ import {
   deleteCity,
 } from "../redux/actionCreator";
 import {
-  CONTAINER,
-  FORMDIV,
-  CUSTOMINPUT,
-  ADDBUTTON,
-  SELECT,
-  CODECONTAINER,
-  PARA,
-  PARA1,
-  CITYPARA,
-  DELETEBUTTON,
-  EDITBUTTON,
+  Container,
+  FormDiv,
+  CustomInput,
+  AddButton,
+  Select,
+  CodeContainer,
+  Para,
+  Para1,
+  CityPara,
+  DeleteButton,
+  EditButton,
 } from "./CustomStyledComponent";
-// import { getCountryList } from "../redux/countryredux/countryCreator";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 class DashBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cname: "",
       list: {},
-      isAccess: false,
-      selectValue: "select",
-      selectID: 0,
+      selectValue: "",
       cityName: "",
       population: "",
       cityList: [],
@@ -68,8 +64,8 @@ class DashBoard extends React.Component {
     e.preventDefault();
     console.log("ADD BUTTON:");
     const { cityObj } = this.props;
-    const { selectID, cityName, population } = this.state;
-    cityObj({ selectID, cityName, population });
+    const { selectValue, cityName, population } = this.state;
+    cityObj({ selectValue, cityName, population });
   };
 
   handleOnSubmit = () => {
@@ -83,21 +79,24 @@ class DashBoard extends React.Component {
   selectChange = (e) => {
     console.log("ID: ", e.target);
     this.setState({
-      selectID: e.target.value,
-      selectValue: e.target.name,
+      selectValue: e.target.value,
     });
   };
 
   render() {
     const { country, city, isError, deleteCityId } = this.props;
     console.log("City LIST: ", city);
-    const { list, isAccess, cityName, population, cname } = this.state;
+    const { cityName, population, cname } = this.state;
     console.log("COUNTRY LIST: ", country);
-
+    console.log("SELECT VALUE: ", this.state.selectValue);
+    if (isError) {
+      console.log("ERRRROOORRR: ", isError);
+      return <Redirect to="/" />;
+    }
     return (
-      <CONTAINER>
-        <FORMDIV>
-          <CUSTOMINPUT
+      <Container>
+        <FormDiv>
+          <CustomInput
             type="text"
             placeholder="enter new country"
             name="cname"
@@ -106,72 +105,71 @@ class DashBoard extends React.Component {
           />
           <br />
           <br />
-          <ADDBUTTON onClick={this.handleOnSubmit}>ADD</ADDBUTTON>
+          <AddButton onClick={this.handleOnSubmit}>ADD</AddButton>
           <br />
           <br />
-          <SELECT onChange={this.selectChange} value={this.state.selectValue}>
+          <Select onChange={this.selectChange}>
             <option value="Select">Select Country</option>
             {country &&
               country.map((item) => {
                 return (
-                  <option key={item.id} value={item.id}>
+                  <option key={item.id} value={item.name}>
                     {item.name}
                   </option>
                 );
               })}
-          </SELECT>
+          </Select>
 
-          {this.state.selectID !== 0 ? (
-            <div>
-              <CODECONTAINER>
-                <PARA>Country Code: </PARA>
-                <PARA1>{this.state.selectID}</PARA1>
-              </CODECONTAINER>
-              <form onSubmit={this.handleAddbutton}>
-                <CUSTOMINPUT
-                  name="cityName"
-                  placeholder="enter city name"
-                  type="text"
-                  value={cityName}
-                  onChange={this.handleCityname}
-                />
-                <br />
-                <br />
-                <CUSTOMINPUT
-                  name="population"
-                  placeholder="enter population"
-                  type="text"
-                  value={population}
-                  onChange={this.handleCityname}
-                />
-                <br />
-                <br />
-                <ADDBUTTON>ADD</ADDBUTTON>
-              </form>
-            </div>
-          ) : null}
-        </FORMDIV>
+          <div>
+            <CodeContainer>
+              <Para>Country Code: </Para>
+              <Para1>{this.state.selectValue}</Para1>
+            </CodeContainer>
+            <form onSubmit={this.handleAddbutton}>
+              <CustomInput
+                name="cityName"
+                placeholder="enter city name"
+                type="text"
+                value={cityName}
+                onChange={this.handleCityname}
+              />
+              <br />
+              <br />
+              <CustomInput
+                name="population"
+                placeholder="enter population"
+                type="text"
+                value={population}
+                onChange={this.handleCityname}
+              />
+              <br />
+              <br />
+              <AddButton>ADD</AddButton>
+            </form>
+          </div>
+        </FormDiv>
         {/* <FORMDIV> */}
-        {this.state.selectID !== 0 ? (
-          <FORMDIV>
-            {city &&
-              city.map((item) => {
-                console.log("CITY ITEM: ", item);
-                return (
-                  <CONTAINER>
-                    <CITYPARA>{item.city_name}</CITYPARA>
-                    <CITYPARA>{item.population}</CITYPARA>
-                    <DELETEBUTTON onClick={() => deleteCityId(item.id)}>
-                      DELETE
-                    </DELETEBUTTON>
-                    <EDITBUTTON>EDIT</EDITBUTTON>
-                  </CONTAINER>
-                );
-              })}
-          </FORMDIV>
-        ) : null}
+        <FormDiv>
+          {city &&
+            city.map((item) => {
+              console.log("CITY ITEM: ", item);
+              return (
+                <Container>
+                  <CityPara>{item.country_name}</CityPara>
+                  <CityPara>{item.city_name}</CityPara>
+                  <CityPara>{item.population}</CityPara>
+                  <DeleteButton onClick={() => deleteCityId(item.id)}>
+                    DELETE
+                  </DeleteButton>
+                  <Link to={`/dashboard/edit/${item.id}`}>
+                    <EditButton>EDIT</EditButton>
+                  </Link>
+                </Container>
+              );
+            })}
+        </FormDiv>
         {/* </FORMDIV> */}
-      </CONTAINER>
+      </Container>
     );
   }
 }

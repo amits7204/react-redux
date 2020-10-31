@@ -13,25 +13,21 @@
       "id": 3
     },
     {
-      "name": "Africa",
+      "name": "Sri Lanka",
       "id": 4
-    },
-    {
-      "name": "Srilanka",
-      "id": 5
     }
   ],
   "city": [
     {
-      "country_id": "1",
-      "city_name": "Bangalore",
-      "population": "83838383",
+      "country_name": "Sri Lanka",
+      "city_name": "Colombo",
+      "population": "282727282",
       "id": 1
     },
     {
-      "country_id": "1",
-      "city_name": "Kolkata",
-      "population": "93838291",
+      "country_name": "America",
+      "city_name": "New York",
+      "population": "1837363839",
       "id": 2
     }
   ]

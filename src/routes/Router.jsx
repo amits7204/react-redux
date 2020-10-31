@@ -1,8 +1,9 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import DashBoard from "../component/DashBoard";
 import Login from "../component/Login";
 import { connect } from "react-redux";
+import EDITCOMPONENT from "../component/EditComponent";
 class Router extends React.Component {
   render() {
     const { isError } = this.props;
@@ -12,6 +13,11 @@ class Router extends React.Component {
         <switch>
           <Route path="/" exact component={Login} />
           <Route path="/dashboard" exact component={DashBoard} />
+          <Route
+            path="/dashboard/edit/:id"
+            exact
+            render={(props) => <EDITCOMPONENT {...props} />}
+          />
         </switch>
       </>
     );
