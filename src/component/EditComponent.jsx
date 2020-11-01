@@ -6,12 +6,13 @@ import {
   AddButton,
 } from "./CustomStyledComponent";
 import { updatePopulation } from "../redux/actionCreator";
+
 class EditComponent extends React.Component {
   constructor(props) {
     console.log("PROPS: ", props);
     super(props);
     this.state = {
-      population: "",
+      population: this.props.location.state.population,
     };
   }
   handleOnChange = (e) => {
@@ -28,6 +29,7 @@ class EditComponent extends React.Component {
     const id = this.props.match.params.id;
     const { population } = this.state;
     update({ id, population });
+    const { isAuth } = this.props;
     this.props.history.goBack();
   };
 
@@ -47,7 +49,7 @@ class EditComponent extends React.Component {
             borderRadius: "50%",
           }}
         >
-          {this.props.match.params.id}
+          {this.props.location.state.population}
         </div>
         <CustomInput
           placeholder="Enter population"

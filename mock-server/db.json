@@ -15,6 +15,18 @@
     {
       "name": "Sri Lanka",
       "id": 4
+    },
+    {
+      "name": "England",
+      "id": 5
+    },
+    {
+      "name": "Germany",
+      "id": 6
+    },
+    {
+      "name": "Japan",
+      "id": 7
     }
   ],
   "city": [
@@ -27,7 +39,7 @@
     {
       "country_name": "America",
       "city_name": "New York",
-      "population": "1837363839",
+      "population": "87678676",
       "id": 2
     }
   ]

@@ -161,7 +161,12 @@ class DashBoard extends React.Component {
                   <DeleteButton onClick={() => deleteCityId(item.id)}>
                     DELETE
                   </DeleteButton>
-                  <Link to={`/dashboard/edit/${item.id}`}>
+                  <Link
+                    to={{
+                      pathname: `/dashboard/edit/${item.id}`,
+                      state: { population: item.population },
+                    }}
+                  >
                     <EditButton>EDIT</EditButton>
                   </Link>
                 </Container>
