@@ -1,10 +1,11 @@
 import "./App.css";
-import Router from "./routes/Router";
+import LinkedInHome from "./component/LinkedInHome";
+import Routes from "./routes/Routes";
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <Routes />
     </div>
   );
 }
