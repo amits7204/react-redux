@@ -1,12 +1,17 @@
 import React from "react";
 import { ProfileStuff, Banner } from "./CustomStyledComponent";
 export default class ProfileComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("PROFILE PROPS: ", this.props.payload);
+  }
   render() {
+    const { profile } = this.props.payload;
     return (
       <>
         <ProfileStuff>
           <img
-            src="https://media-exp1.licdn.com/dms/image/C5603AQG9qqM3l194ww/profile-displayphoto-shrink_100_100/0?e=1609977600&v=beta&t=LSbTuHGnMnNlvzy76TErkGpZBlIqbik21uUyjGe7dZ8"
+            src={profile}
             alt="profile"
             style={{
               borderRadius: "50%",
@@ -16,18 +21,20 @@ export default class ProfileComponent extends React.Component {
               border: "2px solid white",
             }}
           />
-          <p
-            style={{
-              fontWeight: "bold",
-              fontSize: "14px",
-              marginTop: "25px",
-            }}
-          >
-            <u>Amit Singh</u>
-          </p>
-          <p style={{ color: "grey", fontSize: "14px" }}>
-            <small>Software Engineer</small>
-          </p>
+          <div style={{ marginTop: "20px" }}>
+            <p
+              style={{
+                fontWeight: "bold",
+                fontSize: "14px",
+                margin: "0px",
+              }}
+            >
+              <u>{this.props.payload.name}</u>
+            </p>
+            <p style={{ color: "grey", fontSize: "14px", margin: "0px" }}>
+              <small>Software Engineer</small>
+            </p>
+          </div>
           <hr style={{ width: "100%" }}></hr>
           <p
             style={{

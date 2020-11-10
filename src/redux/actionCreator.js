@@ -2,6 +2,12 @@ import {
   LOGIN_GET_REQUEST,
   LOGIN_GET_SUCCESSS,
   LOGIN_GET_FAUILUIER,
+  POSTS_POST_REQUEST,
+  POSTS_POST_SUCCESS,
+  POSTS_POST_FAILURE,
+  POSTS_GET_REQUEST,
+  POSTS_GET_SUCCESS,
+  POSTS_GET_FAILURE,
 } from "./actionType";
 
 import axios from "axios";
@@ -18,6 +24,30 @@ const loginGetFauiluier = (payload) => {
   return { type: LOGIN_GET_FAUILUIER, payload };
 };
 
+const postsPostRequest = (payload) => {
+  return { type: POSTS_POST_REQUEST, payload };
+};
+
+const postsPostSuccess = (payload) => {
+  return { type: POSTS_POST_SUCCESS, payload };
+};
+
+const postsPostFauiluier = (payload) => {
+  return { type: POSTS_POST_FAILURE, payload };
+};
+
+const postsGetRequest = (payload) => {
+  return { type: POSTS_GET_REQUEST, payload };
+};
+
+const postsGetSuccess = (payload) => {
+  return { type: POSTS_GET_SUCCESS, payload };
+};
+
+const postsGetFauiluier = (payload) => {
+  return { type: POSTS_GET_FAILURE, payload };
+};
+
 const getLoginAuth = (payload) => (dispatch) => {
   console.log(payload);
   dispatch(loginGetRequest());
@@ -27,4 +57,39 @@ const getLoginAuth = (payload) => (dispatch) => {
     .then((res) => dispatch(loginGetSuccess(res.data)))
     .catch((err) => dispatch(loginGetFauiluier(err)));
 };
-export { getLoginAuth };
+
+const postsPostPayload = (payload) => (dispatch) => {
+  console.log("POSTS PAYLOAD: ", payload);
+  const {
+    author_id,
+    author_name,
+    author_username,
+    author_title,
+    body,
+  } = payload;
+  let data = {
+    author_id: author_id,
+    author_name: author_name,
+    author_username: author_username,
+    author_title: author_title,
+    body: body,
+    comments: [],
+    likes: [],
+  };
+  dispatch(postsPostRequest());
+  axios
+    .post("http://localhost:3000/posts", data)
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log(err));
+};
+
+const getPosts = () => (dispatch) => {
+  dispatch(postsGetRequest());
+  axios
+    .get("http://localhost:3000/posts")
+    .then((res) => res.data)
+    .then((res) => dispatch(postsGetSuccess(res)))
+    .catch((err) => dispatch(postsGetFauiluier(err)));
+};
+
+export { getLoginAuth, postsPostPayload, getPosts };

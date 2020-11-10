@@ -39,11 +39,12 @@ const Posts = Style.div`
     height: auto;
     border: 1px solid grey;
     border-radius: 4px;
+    margin-bottom: 8px;
 `;
 
 const ProfileStuff = Style.div`
     width: 218px;
-    height: auto;
+    height: 350px;
     border-radius: 4px;
     border: 0.5px solid #969fa1;
     background: #FFFFFF;

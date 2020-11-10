@@ -5,6 +5,7 @@ import ProfileComponent from "./ProfileComponent";
 export default class ProfileNav extends React.Component {
   constructor(props) {
     super(props);
+    console.log("PROPSSSS: ", this.props);
   }
   render() {
     return (
@@ -19,8 +20,8 @@ export default class ProfileNav extends React.Component {
             marginLeft: "75px",
           }}
         >
-          <ProfileComponent />
-          <FeedComponent />
+          <ProfileComponent payload={this.props.location.state} />
+          <FeedComponent payload={this.props.location.state} />
         </div>
       </ProfileContainer>
     );

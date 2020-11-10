@@ -1,16 +1,71 @@
 import React from "react";
+import { connect } from "react-redux";
+import { postsPostPayload, getPosts } from "../redux/actionCreator";
 import {
   PostContainer,
   CreatePostContainer,
   Posts,
 } from "./CustomStyledComponent";
-export default class FeedComponent extends React.Component {
+class FeedComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("PROPPPPSSSS: :", this.props);
+    this.state = {
+      author_id: 0,
+      author_name: "",
+      author_username: "",
+      author_title: "post",
+      body: "",
+    };
+    const { getAllPosts } = this.props;
+    getAllPosts();
+  }
+
+  handleOnChange = (e) => {
+    const { name, authorId, userName } = this.props.payload;
+    console.log(e.target.value);
+    this.setState({
+      author_id: authorId,
+      author_name: name,
+      author_username: userName,
+      body: e.target.value,
+    });
+  };
+
+  handleOnSubmit = (e) => {
+    e.preventDefault();
+    const {
+      author_id,
+      author_name,
+      author_username,
+      author_title,
+      body,
+    } = this.state;
+    const { postsPayload } = this.props;
+    postsPayload({
+      author_id,
+      author_name,
+      author_username,
+      author_title,
+      body,
+    });
+  };
+
+  // componentDidMount() {
+  //   const { getAllPosts } = this.props;
+  //   getAllPosts();
+  // }
+
   render() {
+    const { body } = this.state;
+    const { profile } = this.props.payload;
+    const { allPosts } = this.props;
+    // getAllPosts() && getAllPosts();
     return (
       <>
         <div>
           <CreatePostContainer>
-            <div style={{ display: "flex" }}>
+            <form style={{ display: "flex" }} onSubmit={this.handleOnSubmit}>
               <input
                 type="text"
                 name="post"
@@ -23,6 +78,8 @@ export default class FeedComponent extends React.Component {
                   background: "#ececec",
                   outline: "none",
                 }}
+                value={body}
+                onChange={this.handleOnChange}
               />
               <input
                 type="submit"
@@ -34,7 +91,7 @@ export default class FeedComponent extends React.Component {
                   color: "#1B73B1",
                 }}
               />
-            </div>
+            </form>
             <hr
               style={{
                 marginBottom: "10px",
@@ -75,7 +132,7 @@ export default class FeedComponent extends React.Component {
                 }}
               >
                 <img
-                  src={`${process.env.PUBLIC_URL}/video.png`}
+                  src={`${process.env.PUBLIC_URL}/video1.png`}
                   height="20px"
                   width="20px"
                   alt="photo"
@@ -150,47 +207,105 @@ export default class FeedComponent extends React.Component {
           <hr
             style={{ marginBottom: "10px", marginTop: "10px", width: "554px" }}
           ></hr>
-          <Posts>
-            <div
-              style={{
-                display: "flex",
-                gap: "4px",
-                justifyContent: "left",
-                margin: "15px",
-              }}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/article.png`}
-                alt="profile"
-                style={{
-                  height: "35px",
-                  width: "35px",
-                  border: "1px solid grey",
-                  borderRadius: "50%",
-                }}
-              />
-              <div>
-                <p
-                  style={{
-                    margin: "0px",
-                    textAlign: "left",
-                    fontWeight: "bold",
-                    fontSize: "14px",
-                  }}
-                >
-                  Amit Singh
-                </p>
-                <p style={{ margin: "0px" }}>
-                  <small>Software Engineer</small>
-                </p>
-              </div>
-            </div>
-            <p style={{ textAlign: "left", margin: "15px", width: "auto" }}>
-              Feed news
-            </p>
-          </Posts>
+          {allPosts &&
+            allPosts.reverse().map((item) => {
+              return (
+                <Posts>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "4px",
+                      justifyContent: "left",
+                      margin: "15px",
+                    }}
+                  >
+                    <img
+                      src={profile}
+                      alt="profile"
+                      style={{
+                        height: "35px",
+                        width: "35px",
+                        border: "1px solid grey",
+                        borderRadius: "50%",
+                      }}
+                    />
+                    <div>
+                      <p
+                        style={{
+                          margin: "0px",
+                          textAlign: "left",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {this.props.payload.name}
+                      </p>
+                      <p style={{ margin: "0px" }}>
+                        <small>Software Engineer</small>
+                      </p>
+                    </div>
+                  </div>
+                  <p
+                    style={{ textAlign: "left", margin: "15px", width: "auto" }}
+                  >
+                    {item.body}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    <img
+                      src={`${process.env.PUBLIC_URL}/like.png`}
+                      height="20xp"
+                      width="20xp"
+                      alt="like"
+                      style={{ marginTop: "10px" }}
+                    />
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        color: "GrayText",
+                      }}
+                    >
+                      Like
+                    </p>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/comment.png`}
+                      height="20xp"
+                      width="20xp"
+                      alt="comment"
+                      style={{ marginTop: "12px" }}
+                    />
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        color: "GrayText",
+                      }}
+                    >
+                      Comment
+                    </p>
+                  </div>
+                </Posts>
+              );
+            })}
         </div>
       </>
     );
   }
 }
+
+const mapToStateProps = (state) => ({
+  allPosts: state.app.allPosts,
+});
+
+const mapToDispatchProps = (dispatch) => ({
+  postsPayload: (payload) => dispatch(postsPostPayload(payload)),
+  getAllPosts: () => dispatch(getPosts()),
+});
+
+export default connect(mapToStateProps, mapToDispatchProps)(FeedComponent);

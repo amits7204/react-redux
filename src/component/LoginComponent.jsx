@@ -11,6 +11,9 @@ class LoginComponent extends React.Component {
       username: "",
       password: "",
       isTrue: false,
+      name: "",
+      profile: "",
+      authorId: "",
     };
     const { getLogin } = this.props;
     getLogin();
@@ -30,26 +33,41 @@ class LoginComponent extends React.Component {
     const { username, password } = this.state;
     console.log("LOGIN OBJ: ", loginObj.length);
     for (let i = 0; i < loginObj.length; i++) {
+      console.log("IIIII: ", i);
       if (
         loginObj[i].username === username &&
         loginObj[i].password === password
       ) {
+        console.log("TRUE");
         this.setState({
           isTrue: true,
+          name: loginObj[i].full_name,
+          profile: loginObj[i].user_profile,
+          authorId: loginObj[i].userId,
         });
         break;
-      } else {
-        alert("User credential wrong");
       }
     }
   };
 
   render() {
-    const { username, password, isTrue } = this.state;
+    const { username, password, isTrue, name, profile, authorId } = this.state;
     console.log("getLogin: ", this.props);
     if (isTrue) {
       console.log("TRUE");
-      return <Redirect to="/profile" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/profile",
+            state: {
+              name: name,
+              profile: profile,
+              authorId: authorId,
+              userName: username,
+            },
+          }}
+        />
+      );
     }
     return (
       <SignInContainer>
