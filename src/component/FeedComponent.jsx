@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postsPostPayload, getPosts } from "../redux/actionCreator";
+import {
+  postsPostPayload,
+  getPosts,
+  postsLikesData,
+} from "../redux/actionCreator";
 import {
   PostContainer,
   CreatePostContainer,
@@ -16,9 +20,9 @@ class FeedComponent extends React.Component {
       author_username: "",
       author_title: "post",
       body: "",
+      commentMessage: "",
+      isLike: false,
     };
-    const { getAllPosts } = this.props;
-    getAllPosts();
   }
 
   handleOnChange = (e) => {
@@ -31,6 +35,11 @@ class FeedComponent extends React.Component {
       body: e.target.value,
     });
   };
+
+  componentDidMount() {
+    const { getAllPosts } = this.props;
+    getAllPosts();
+  }
 
   handleOnSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +58,14 @@ class FeedComponent extends React.Component {
       author_title,
       body,
     });
+  };
+
+  handleOnClick = (id, postLike) => {
+    console.log(this.props);
+
+    const { postLikes, payload } = this.props;
+    const { authorId, userName } = payload;
+    postLikes({ id, postLike, authorId, userName });
   };
 
   // componentDidMount() {
@@ -208,7 +225,7 @@ class FeedComponent extends React.Component {
             style={{ marginBottom: "10px", marginTop: "10px", width: "554px" }}
           ></hr>
           {allPosts &&
-            allPosts.reverse().map((item) => {
+            allPosts.map((item) => {
               return (
                 <Posts>
                   <div
@@ -270,6 +287,7 @@ class FeedComponent extends React.Component {
                         fontSize: "14px",
                         color: "GrayText",
                       }}
+                      onClick={() => this.handleOnClick(item.id, item.likes)}
                     >
                       Like
                     </p>
@@ -306,6 +324,7 @@ const mapToStateProps = (state) => ({
 const mapToDispatchProps = (dispatch) => ({
   postsPayload: (payload) => dispatch(postsPostPayload(payload)),
   getAllPosts: () => dispatch(getPosts()),
+  postLikes: (payload) => dispatch(postsLikesData(payload)),
 });
 
 export default connect(mapToStateProps, mapToDispatchProps)(FeedComponent);

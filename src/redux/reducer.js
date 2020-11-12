@@ -9,6 +9,9 @@ import {
   POSTS_GET_REQUEST,
   POSTS_GET_SUCCESS,
   POSTS_GET_FAILURE,
+  POSTS_LIKES_REQUEST,
+  POSTS_LIKES_SUCCESS,
+  POSTS_LIKES_FAILURE,
 } from "./actionType";
 export const initState = {
   isError: false,
@@ -64,6 +67,22 @@ export default (state = initState, { type, payload }) => {
         allPosts: payload,
       };
     case POSTS_GET_FAILURE:
+      return {
+        ...state,
+        isError: true,
+      };
+    case POSTS_LIKES_REQUEST:
+      return {
+        ...state,
+      };
+    case POSTS_LIKES_SUCCESS:
+      console.log("POSTS_Likes_SUCCESS ", payload);
+      return {
+        ...state,
+        isAuth: true,
+        allPosts: payload,
+      };
+    case POSTS_LIKES_FAILURE:
       return {
         ...state,
         isError: true,

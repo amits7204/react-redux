@@ -8,6 +8,9 @@ import {
   POSTS_GET_REQUEST,
   POSTS_GET_SUCCESS,
   POSTS_GET_FAILURE,
+  POSTS_LIKES_REQUEST,
+  POSTS_LIKES_SUCCESS,
+  POSTS_LIKES_FAILURE,
 } from "./actionType";
 
 import axios from "axios";
@@ -46,6 +49,18 @@ const postsGetSuccess = (payload) => {
 
 const postsGetFauiluier = (payload) => {
   return { type: POSTS_GET_FAILURE, payload };
+};
+
+const postsLikesRequest = (payload) => {
+  return { type: POSTS_LIKES_REQUEST, payload };
+};
+
+const postsLikesSuccess = (payload) => {
+  return { type: POSTS_LIKES_SUCCESS, payload };
+};
+
+const postsLikesFauiluier = (payload) => {
+  return { type: POSTS_LIKES_FAILURE, payload };
 };
 
 const getLoginAuth = (payload) => (dispatch) => {
@@ -92,4 +107,18 @@ const getPosts = () => (dispatch) => {
     .catch((err) => dispatch(postsGetFauiluier(err)));
 };
 
-export { getLoginAuth, postsPostPayload, getPosts };
+const postsLikesData = (payload) => (dispatch) => {
+  console.log(payload);
+  let { id, postLike, authorId, userName } = payload;
+  postLike = [...postLike, { author_id: authorId, userName: userName }];
+  dispatch(postsLikesRequest());
+  return axios
+    .patch("http://localhost:3000/posts/" + id, {
+      likes: postLike,
+    })
+    .then((res) => res.data)
+    .then((res) => dispatch(postsLikesSuccess(res)))
+    .catch((err) => dispatch(postsLikesFauiluier(err)));
+};
+
+export { getLoginAuth, postsPostPayload, getPosts, postsLikesData };
