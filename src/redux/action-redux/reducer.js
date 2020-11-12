@@ -10,7 +10,7 @@ const initState = {
 };
 
 export default (state = initState, { type, payload }) => {
-  console.log("Reducer: ", payload);
+  console.log("ITEMS Reducer: ", payload);
   switch (type) {
     case SEARCH_POST_REQUEST:
       return {
@@ -18,10 +18,11 @@ export default (state = initState, { type, payload }) => {
       };
 
     case SEARCH_POST_SUCCESS:
+      console.log("SUCCESS: ", payload);
       return {
         ...state,
         isAuth: true,
-        items: payload,
+        items: payload.restaurants,
       };
     case SEARCH_POST_FAULIER:
       return {

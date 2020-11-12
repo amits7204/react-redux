@@ -6,21 +6,21 @@ import {
 
 import axios from "axios";
 
-const loginPostRequest = (payload) => {
+const searchPostRequest = (payload) => {
   return { type: SEARCH_POST_REQUEST, payload };
 };
 
-const loginPostSuccess = (payload) => {
+const searchPostSuccess = (payload) => {
   return { type: SEARCH_POST_SUCCESS, payload };
 };
 
-const loginPostFauiluier = (payload) => {
+const searchPostFauiluier = (payload) => {
   return { type: SEARCH_POST_FAULIER, payload };
 };
 
 const getSearchResult = (query) => (dispatch) => {
   console.log("PAYLOAD Search: ", query);
-  dispatch(loginPostRequest());
+  dispatch(searchPostRequest());
   axios
     .post(
       `https://developers.zomato.com/api/v2.1/search`,
@@ -35,8 +35,8 @@ const getSearchResult = (query) => (dispatch) => {
       }
     )
     .then((res) => res.data)
-    .then((res) => dispatch(loginPostSuccess(res)))
-    .catch((err) => dispatch(loginPostFauiluier(err)));
+    .then((res) => dispatch(searchPostSuccess(res)))
+    .catch((err) => dispatch(searchPostFauiluier(err)));
 };
 
 export { getSearchResult };

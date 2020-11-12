@@ -10,7 +10,7 @@ const initState = {
 };
 
 export default (state = initState, { type, payload }) => {
-  console.log("Reducer: ", payload);
+  console.log("Auth Reducer: ", payload);
   switch (type) {
     case LOGIN_POST_REQUEST:
       return {
