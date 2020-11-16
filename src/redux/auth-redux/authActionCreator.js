@@ -22,16 +22,10 @@ const getLoginAuth = (payload) => (dispatch) => {
   console.log("PAYLOAD: ", payload);
   dispatch(loginPostRequest());
   axios
-    .get(
-      "https://developers.zomato.com/api/v2.1/search",
-      {
-        param: { payload },
-      },
-      {
-        "Content-Type": "application/json",
-        "user-key": "d287b59cbddc255b35b51f672d8e8492",
-      }
-    )
+    .post("https://reqres.in/api/login/", {
+      email: payload.email,
+      password: payload.password,
+    })
     .then((res) => res.data)
     .then((res) => dispatch(loginPostSuccess(res)))
     .catch((err) => dispatch(loginPostFauiluier(err)));

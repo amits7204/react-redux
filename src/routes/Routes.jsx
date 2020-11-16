@@ -9,7 +9,7 @@ export default class Routes extends React.Component {
       <>
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/dashboard" exact component={DashBoard} />
+          <Route path="/dashboard" component={DashBoard} />
         </Switch>
       </>
     );
